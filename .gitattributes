@@ -1,0 +1,5 @@
+# Treat media as binary so git never line-ending-normalizes or diffs it.
+*.mp4 binary
+*.jpg binary
+*.png binary
+*.svg -text

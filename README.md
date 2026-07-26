@@ -43,6 +43,15 @@ renders exactly the nodes and edges the walkers built.
 *Real output of one run: 27 nodes, 51 edges. Red = rejected futures with the policy
 violations that killed them. Green = the selected branch and its committed mock payment.*
 
+### Concept film
+
+[![ForkGuard concept film](docs/media/concept-film-poster.jpg)](docs/media/forkguard-concept-film.mp4)
+
+*25-second stylized concept film — click to play.* **This is an illustrative animation, not
+a product demo.** It is AI-generated, carries the generator's watermark, and its on-screen
+invoice is decorative rather than the canonical scenario. For what the software actually
+does, run it (`jac start main.jac`) or read the verified walkthrough below.
+
 ---
 
 ## The canonical demo
