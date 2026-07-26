@@ -3,131 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEGIS ForkGuard — Counterfactual Execution Firewall</title>
+    <title>AEGIS ForkGuard — Counterfactual Execution Firewall for AI Agents</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <div class="cyber-glow-bg"></div>
     <div class="app-container">
-        <!-- Header / Mission Control -->
+        <!-- Top Navigation / Header -->
         <header class="app-header">
             <div class="brand">
-                <div class="shield-icon">🛡️</div>
+                <div class="shield-logo">
+                    <span class="shield-icon">🛡️</span>
+                    <span class="pulse-ring"></span>
+                </div>
                 <div>
-                    <h1>AEGIS ForkGuard</h1>
-                    <p class="tagline">Counterfactual Execution Firewall for AI Agents • JacHacks SF 2026</p>
+                    <div class="brand-title-row">
+                        <h1>AEGIS FORKGUARD</h1>
+                        <span class="tag-version">v1.0 JAC NATIVE</span>
+                    </div>
+                    <p class="tagline">Counterfactual Execution Firewall for Autonomous AI Agents • JacHacks SF 2026</p>
                 </div>
             </div>
 
-            <div class="status-bar">
-                <div class="status-badge" id="fallback-badge">
-                    <span class="dot yellow-dot"></span> Deterministic Fallback Active
+            <div class="header-actions">
+                <div class="live-status-pill">
+                    <span class="status-dot green-pulse"></span>
+                    <span class="status-text">Jac Engine Active</span>
                 </div>
-                <div class="status-badge" id="system-status-badge">
-                    <span class="dot green-dot"></span> System Guarded
+                <div class="live-status-pill warning-pill">
+                    <span class="status-dot yellow-pulse"></span>
+                    <span class="status-text">Deterministic Safety Active</span>
                 </div>
+                <a href="https://github.com/Rafa-Innerchispa/aegis-forkguard" target="_blank" class="github-link-btn">
+                    <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    GitHub Repo
+                </a>
             </div>
         </header>
 
-        <!-- Section 1: Mission Control Bar -->
-        <section class="mission-control-panel">
-            <div class="metric-card">
-                <span class="metric-label">CURRENT MODE</span>
-                <span class="metric-value" id="mode-val">IDLE</span>
+        <!-- Metric KPI Cards -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon">⚡</div>
+                <div class="kpi-details">
+                    <span class="kpi-label">EXECUTION MODE</span>
+                    <span class="kpi-value" id="mode-val">IDLE</span>
+                </div>
             </div>
-            <div class="metric-card">
-                <span class="metric-label">RISK LEVEL</span>
-                <span class="metric-value risk-low" id="risk-val">LOW (0/100)</span>
+            <div class="kpi-card">
+                <div class="kpi-icon">🚨</div>
+                <div class="kpi-details">
+                    <span class="kpi-label">MAX RISK SCORE</span>
+                    <span class="kpi-value risk-safe" id="risk-val">0 / 100</span>
+                </div>
             </div>
-            <div class="metric-card">
-                <span class="metric-label">ACTIVE WALKER</span>
-                <span class="metric-value" id="walker-val">Ready</span>
+            <div class="kpi-card">
+                <div class="kpi-icon">🌳</div>
+                <div class="kpi-details">
+                    <span class="kpi-label">FUTURES EVALUATED</span>
+                    <span class="kpi-value" id="futures-count-val">4 Branches</span>
+                </div>
             </div>
-            <div class="metric-card">
-                <span class="metric-label">COMMITTED BRANCH</span>
-                <span class="metric-value highlight" id="committed-val">None</span>
+            <div class="kpi-card highlight-kpi">
+                <div class="kpi-icon">✅</div>
+                <div class="kpi-details">
+                    <span class="kpi-label">COMMITTED SAFE BRANCH</span>
+                    <span class="kpi-value highlight-text" id="committed-val">None</span>
+                </div>
             </div>
         </section>
 
-        <!-- Main Workspace: 2-Column Grid -->
-        <main class="main-grid">
-            <!-- Left Column: Attack Inbox & Controls -->
-            <div class="left-column">
-                <div class="card attack-inbox-card">
-                    <div class="card-header">
-                        <h2>📥 Attack Inbox (Document Feed)</h2>
-                        <span class="badge info-badge">Simulated Financial Agent</span>
+        <!-- Workspace Grid -->
+        <main class="main-workspace-grid">
+            <!-- Left Column: Attack Inbox & Sandbox -->
+            <div class="workspace-column left-pane">
+                <div class="cyber-card">
+                    <div class="card-title-bar">
+                        <h2>📥 Attack Inbox & Document Feed</h2>
+                        <span class="cyber-badge cyan-badge">Financial Agent Vector</span>
                     </div>
 
-                    <div class="invoice-selector">
-                        <label class="radio-card" id="card-safe">
-                            <input type="radio" name="invoice-choice" value="safe" checked onchange="selectInvoice('safe')">
-                            <div class="radio-content">
-                                <div class="radio-title">📄 Safe Invoice (INV-2026-0450)</div>
-                                <div class="radio-desc">Acme Office Supplies • $450.00 • Verified</div>
-                            </div>
-                        </label>
-
-                        <label class="radio-card danger-card" id="card-attacked">
-                            <input type="radio" name="invoice-choice" value="attacked" onchange="selectInvoice('attacked')">
-                            <div class="radio-content">
-                                <div class="radio-title">⚠️ Attacked Invoice (Embedded Injection)</div>
-                                <div class="radio-desc">Acme Office Supplies • Prompt Injection ($45,000)</div>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class="document-preview-box">
-                        <div class="box-title">RAW DOCUMENT PAYLOAD</div>
-                        <pre id="doc-preview-content">Loading invoice payload...</pre>
-                    </div>
-
-                    <div class="action-bar">
-                        <button class="btn btn-vulnerable" id="btn-vulnerable" onclick="runVulnerable()">
-                            ⚡ Run Vulnerable Agent
+                    <!-- Invoice Preset Tabs -->
+                    <div class="preset-selector">
+                        <button class="tab-btn active" id="tab-safe" onclick="selectInvoice('safe')">
+                            <span class="icon">📄</span> Clean Invoice ($450)
                         </button>
-                        <button class="btn btn-forkguard" id="btn-forkguard" onclick="runForkGuard()">
-                            🛡️ Run with ForkGuard
+                        <button class="tab-btn danger-tab" id="tab-attacked" onclick="selectInvoice('attacked')">
+                            <span class="icon">⚠️</span> Prompt Injection ($45k)
                         </button>
-                        <button class="btn btn-secondary" onclick="resetDemo()">
-                            🔄 Reset Demo
+                        <button class="tab-btn custom-tab" id="tab-custom" onclick="selectInvoice('custom')">
+                            <span class="icon">✏️</span> Custom Sandbox
+                        </button>
+                    </div>
+
+                    <!-- Document Editor / Preview -->
+                    <div class="payload-box">
+                        <div class="payload-header">
+                            <span>RAW INVOICE PAYLOAD (JSON)</span>
+                            <span class="injection-indicator" id="injection-tag">No Injection Detected</span>
+                        </div>
+                        <textarea id="doc-preview-textarea" class="payload-editor" readonly></textarea>
+                    </div>
+
+                    <!-- Execution Trigger Bar -->
+                    <div class="trigger-actions">
+                        <button class="btn btn-vulnerable-run" id="btn-vulnerable" onclick="runVulnerable()">
+                            <span class="btn-glow"></span>
+                            ⚡ Run Vulnerable Agent (Unprotected)
+                        </button>
+                        <button class="btn btn-forkguard-run" id="btn-forkguard" onclick="runForkGuard()">
+                            <span class="btn-glow"></span>
+                            🛡️ Run with AEGIS ForkGuard
+                        </button>
+                        <button class="btn btn-reset" onclick="resetDemo()">
+                            🔄 Reset Simulation
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Column: Future Defense Graph & Incident Report -->
-            <div class="right-column">
-                <!-- Counterfactual Future Branches Graph -->
-                <div class="card graph-card">
-                    <div class="card-header">
+            <!-- Right Column: Counterfactual Defense Graph & Audit -->
+            <div class="workspace-column right-pane">
+                <!-- Counterfactual Graph Visualization Card -->
+                <div class="cyber-card graph-card">
+                    <div class="card-title-bar">
                         <h2>🌳 Counterfactual Future Defense Graph</h2>
-                        <span class="badge" id="graph-status-tag">4 Futures Simulated</span>
+                        <span class="cyber-badge emerald-badge" id="graph-status-tag">Ready for Simulation</span>
                     </div>
 
-                    <div class="graph-container" id="graph-tree">
-                        <div class="graph-placeholder">Select an invoice and press <strong>Run with ForkGuard</strong> to simulate future execution paths.</div>
+                    <div class="graph-tree-wrapper" id="graph-tree-container">
+                        <div class="graph-empty-state">
+                            <div class="empty-icon">🛡️</div>
+                            <h3>Counterfactual Firewall Ready</h3>
+                            <p>Select an invoice from the feed and click <strong>Run with AEGIS ForkGuard</strong> to simulate 4 execution futures in Jac.</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Incident Report Panel -->
-                <div class="card report-card">
-                    <div class="card-header">
-                        <h2>📋 Forensic Audit & Incident Report</h2>
-                        <span class="badge" id="report-status-tag">Audit Pending</span>
+                <!-- Forensic Audit Report Card -->
+                <div class="cyber-card audit-card">
+                    <div class="card-title-bar">
+                        <h2>📋 Forensic Audit & Evidence Timeline</h2>
+                        <span class="cyber-badge" id="audit-status-tag">Audit Pending</span>
                     </div>
 
-                    <div class="report-content" id="report-view">
-                        <div class="empty-state">No audit generated yet. Execute a run above.</div>
+                    <div class="audit-tabs">
+                        <button class="audit-tab-btn active" onclick="showAuditTab('summary')">Summary Report</button>
+                        <button class="audit-tab-btn" onclick="showAuditTab('evidence')">Evidence Records</button>
+                        <button class="audit-tab-btn" onclick="showAuditTab('trace')">Attack Trace</button>
+                    </div>
+
+                    <div class="audit-body" id="audit-body-container">
+                        <div class="empty-state-text">No execution audit recorded yet.</div>
                     </div>
                 </div>
             </div>
         </main>
 
         <footer class="app-footer">
-            <p>AEGIS ForkGuard • Built natively with <strong>Jaclang (Jaseci Labs)</strong> • 100% Simulation Mode</p>
+            <p>AEGIS ForkGuard • Developed natively in <strong>Jaclang (v0.16.7)</strong> for <strong>JacHacks SF 2026</strong> • 100% Local Simulation Engine</p>
         </footer>
     </div>
 
