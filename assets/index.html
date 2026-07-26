@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS ForkGuard — A Time Machine for Autonomous AI Agents</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+    <div class="cyber-glow-bg"></div>
+    <div class="app-container">
+
+        <!-- ===================== TOP BAR ===================== -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="shield-logo">
+                    <span class="shield-icon">🛡️</span>
+                    <span class="pulse-ring"></span>
+                </div>
+                <div>
+                    <div class="brand-title-row">
+                        <h1>AEGIS FORKGUARD</h1>
+                        <span class="tag-version">JAC 0.16 NATIVE</span>
+                    </div>
+                    <p class="tagline" data-i18n="tagline">A time machine for autonomous AI agents • JacHacks SF 2026</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <span class="sim-env-badge" data-i18n="sim_env">⚠ Simulated Environment</span>
+                <span class="state-pill" id="state-pill"><span class="status-dot green-pulse"></span><span id="state-pill-text">IDLE</span></span>
+                <div class="lang-selector-box">
+                    <span class="lang-icon">🌐</span>
+                    <select id="lang-select" onchange="changeLanguage(this.value)">
+                        <option value="en" selected>English</option>
+                        <option value="es">Español</option>
+                    </select>
+                </div>
+                <button class="btn btn-reset" id="btn-reset" onclick="resetDemo()"><span data-i18n="btn_reset">🔄 Reset Demo</span></button>
+            </div>
+        </header>
+
+        <div class="error-banner" id="error-banner">
+            <b data-i18n="err_title">Backend unreachable.</b>
+            <span data-i18n="err_body">This dashboard only renders real results computed by the Jac engine — nothing is faked client-side. Start the server with</span>
+            <code>jac start main.jac</code>
+        </div>
+
+        <!-- ===================== KPI STRIP ===================== -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon">⚡</div>
+                <div class="kpi-details">
+                    <span class="kpi-label" data-i18n="kpi_mode">EXECUTION MODE</span>
+                    <span class="kpi-value" id="kpi-mode">IDLE</span>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">🚨</div>
+                <div class="kpi-details">
+                    <span class="kpi-label" data-i18n="kpi_risk">INJECTED-BRANCH RISK</span>
+                    <span class="kpi-value risk-safe" id="kpi-risk">—</span>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">🌳</div>
+                <div class="kpi-details">
+                    <span class="kpi-label" data-i18n="kpi_futures">FUTURES EVALUATED</span>
+                    <span class="kpi-value" id="kpi-futures">—</span>
+                </div>
+            </div>
+            <div class="kpi-card highlight-kpi">
+                <div class="kpi-icon">✅</div>
+                <div class="kpi-details">
+                    <span class="kpi-label" data-i18n="kpi_committed">COMMITTED SAFE BRANCH</span>
+                    <span class="kpi-value highlight-text" id="kpi-committed" data-i18n-idle="kpi_none">None</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== WORKSPACE ===================== -->
+        <main class="main-workspace-grid" style="display:grid; grid-template-columns: 330px 1fr 350px; gap: 1.1rem; align-items: start;">
+
+            <!-- LEFT: document feed + verified record + controls -->
+            <div class="workspace-column left-pane">
+                <div class="cyber-card">
+                    <div class="card-title-bar">
+                        <h2 data-i18n="inbox_title">📥 Untrusted Document</h2>
+                        <span class="cyber-badge cyan-badge" data-i18n="agent_badge">Procurement Agent</span>
+                    </div>
+
+                    <div class="preset-selector">
+                        <button class="tab-btn danger-tab active" id="tab-attacked" onclick="selectInvoice('attacked')">
+                            <span class="icon">⚠️</span> <span data-i18n="tab_attacked">Injected ($45k)</span>
+                        </button>
+                        <button class="tab-btn" id="tab-safe" onclick="selectInvoice('safe')">
+                            <span class="icon">📄</span> <span data-i18n="tab_safe">Clean ($450)</span>
+                        </button>
+                        <button class="tab-btn custom-tab" id="tab-custom" onclick="selectInvoice('custom')">
+                            <span class="icon">✏️</span> <span data-i18n="tab_custom">Sandbox</span>
+                        </button>
+                    </div>
+
+                    <div class="payload-box">
+                        <div class="payload-header">
+                            <span data-i18n="payload_title">INVOICE PAYLOAD (JSON)</span>
+                            <span class="injection-indicator" id="injection-tag" data-i18n="tag_unknown">Unscanned</span>
+                        </div>
+                        <textarea id="doc-preview-textarea" class="payload-editor" readonly spellcheck="false"></textarea>
+                    </div>
+
+                    <div class="untrusted-reveal" id="untrusted-reveal">
+                        <h4 data-i18n="untrusted_title">Hidden untrusted text</h4>
+                        <div id="untrusted-text">—</div>
+                    </div>
+
+                    <div class="vendor-record-box">
+                        <h3 data-i18n="vendor_title">✓ Verified vendor record (server-side)</h3>
+                        <div id="vendor-record-rows">
+                            <div class="vr-row"><span data-i18n="vendor_loading">loading…</span><span></span></div>
+                        </div>
+                    </div>
+
+                    <div class="trigger-actions">
+                        <button class="btn btn-vulnerable-run" id="btn-vulnerable" onclick="runVulnerable()">
+                            <span data-i18n="btn_vulnerable">⚡ Run Unprotected</span>
+                        </button>
+                        <button class="btn btn-forkguard-run" id="btn-forkguard" onclick="runForkGuard()">
+                            <span data-i18n="btn_forkguard">🛡️ Run ForkGuard</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER: live decision graph -->
+            <div class="workspace-column center-pane">
+                <div class="cyber-card graph-card">
+                    <div class="card-title-bar">
+                        <h2 data-i18n="graph_title">🌳 Live Decision Graph (Jac nodes &amp; edges)</h2>
+                        <span class="cyber-badge emerald-badge" id="graph-status-tag" data-i18n="graph_ready">Ready</span>
+                    </div>
+                    <div class="graph-svg-wrap" id="graph-wrap">
+                        <div class="graph-empty-state" id="graph-empty">
+                            <div class="empty-icon">🛡️</div>
+                            <h3 data-i18n="empty_title">Counterfactual firewall ready</h3>
+                            <p data-i18n="empty_desc">Run ForkGuard to fork the proposed tool call into four futures. Every node and edge drawn here is streamed from the Jac graph on the server.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FINAL BANNER -->
+                <div class="final-banner" id="final-banner">
+                    <div>
+                        <div class="fb-title" id="fb-title">APPROVED WITH RESTRICTIONS</div>
+                        <div class="fb-sub" id="fb-sub"></div>
+                    </div>
+                    <div class="fb-tx" id="fb-tx"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT: branch scorecards + audit -->
+            <div class="workspace-column right-pane">
+                <div class="cyber-card">
+                    <div class="card-title-bar">
+                        <h2 data-i18n="scores_title">📊 Branch Scorecards</h2>
+                        <span class="cyber-badge" id="scores-tag" data-i18n="scores_pending">Pending</span>
+                    </div>
+                    <div class="branch-scorecards" id="branch-scorecards">
+                        <div class="empty-state-text" data-i18n="scores_empty">No branches evaluated yet.</div>
+                    </div>
+                </div>
+
+                <div class="cyber-card audit-card" style="margin-top:1rem;">
+                    <div class="card-title-bar">
+                        <h2 data-i18n="audit_title">📋 Audit Report</h2>
+                        <span class="cyber-badge" id="audit-status-tag" data-i18n="audit_pending">Pending</span>
+                    </div>
+                    <div class="audit-tabs">
+                        <button class="audit-tab-btn active" id="atab-summary" onclick="showAuditTab('summary')" data-i18n="audit_tab_summary">Summary</button>
+                        <button class="audit-tab-btn" id="atab-evidence" onclick="showAuditTab('evidence')" data-i18n="audit_tab_evidence">Evidence</button>
+                        <button class="audit-tab-btn" id="atab-trace" onclick="showAuditTab('trace')" data-i18n="audit_tab_trace">Injection Trace</button>
+                    </div>
+                    <div class="audit-body" id="audit-body-container">
+                        <div class="empty-state-text" data-i18n="no_audit">No run recorded yet.</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ===================== TIMELINE ===================== -->
+        <div class="cyber-card timeline-card">
+            <div class="card-title-bar">
+                <h2 data-i18n="timeline_title">🚶 Walker Activity Timeline</h2>
+                <span class="cyber-badge" id="timeline-tag" data-i18n="timeline_empty">Idle</span>
+            </div>
+            <div class="timeline-strip" id="timeline-strip">
+                <div class="empty-state-text" data-i18n="timeline_hint">Walker events will stream here after a run.</div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <p data-i18n="footer_text">AEGIS ForkGuard • JacHacks SF 2026 • Core in Jaclang 0.16 • SIMULATED environment: every vendor, account, and transaction is fictional; mock commits go to a local audit log only.</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
