@@ -10,7 +10,8 @@
 #   3. TEST         the full acceptance suite passes
 #   4. DEMO         a real `jac run main.jac` commits exactly $450.00 to the
 #                   verified account (the P0 acceptance criterion)
-#   5. LANG MIX     Jac is >= 40% of first-party executable source
+#   5. RED TEAM     12 adversarial documents cannot break the hard invariant
+#   6. LANG MIX     Jac is >= 40% of first-party executable source
 #
 # Deliberately runs the demo for real rather than trusting the test suite:
 # tests and an end-to-end run are separate checks.
@@ -24,7 +25,7 @@ import from pathlib { Path }
 
 glob MODULES: list[str] = [
     "main.jac", "graph.jac", "walkers.jac",
-    "policies.jac", "ai.jac", "simulation.jac", "build.jac"
+    "policies.jac", "ai.jac", "simulation.jac", "build.jac", "redteam.jac"
 ];
 glob TEST_FILE: str = "tests/forkguard_tests.jac";
 
@@ -198,7 +199,31 @@ def gate_demo(jac: str) -> Step {
 }
 
 # ---------------------------------------------------------------------------
-# Gate 5: language mix (replaces the old scripts/langmix.py)
+# Gate 5: red team - the hard invariant must survive every known attack
+# ---------------------------------------------------------------------------
+
+def gate_redteam(jac: str) -> Step {
+    started = time.time();
+    res = run_cmd([jac, "run", "redteam.jac"]);
+    combined = res.out + res.err;
+    passed = res.code == 0 and "RED TEAM PASSED" in combined;
+    summary = "";
+    for line_txt in combined.splitlines() {
+        stripped = line_txt.strip();
+        if stripped.startswith("RED TEAM") {
+            summary = stripped;
+        }
+    }
+    return Step(
+        name="red team",
+        ok=passed,
+        detail=(summary) if summary else ("harness produced no verdict"),
+        seconds=time.time() - started
+    );
+}
+
+# ---------------------------------------------------------------------------
+# Gate 6: language mix (replaces the old scripts/langmix.py)
 # ---------------------------------------------------------------------------
 
 def is_skipped(path: Path) -> bool {
@@ -306,19 +331,22 @@ with entry:__main__ {
 
     steps: list[Step] = [];
 
-    print("\n[1/5] Type checking modules...");
+    print("\n[1/6] Type checking modules...");
     steps.append(gate_typecheck(jac));
 
-    print("\n[2/5] Linting...");
+    print("\n[2/6] Linting...");
     steps.append(gate_lint(jac));
 
-    print("\n[3/5] Running acceptance tests...");
+    print("\n[3/6] Running acceptance tests...");
     steps.append(gate_tests(jac));
 
-    print("\n[4/5] Running the end-to-end demo...");
+    print("\n[4/6] Running the end-to-end demo...");
     steps.append(gate_demo(jac));
 
-    print("\n[5/5] Measuring language mix...");
+    print("\n[5/6] Red-teaming the invariant...");
+    steps.append(gate_redteam(jac));
+
+    print("\n[6/6] Measuring language mix...");
     steps.append(gate_langmix());
 
     ok = report(steps);
