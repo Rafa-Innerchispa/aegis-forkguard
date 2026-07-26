@@ -26,6 +26,8 @@ const translations = {
         tab_safe: "Clean ($450)",
         tab_custom: "Sandbox",
         payload_title: "INVOICE PAYLOAD (JSON)",
+        payload_locked: "LOCKED PRESET — USE SANDBOX TAB TO EDIT",
+        payload_editable: "EDITABLE — PASTE A PAYLOAD, THEN RUN FORKGUARD",
         tag_unknown: "Unscanned",
         tag_clean: "No injection found by Jac classifier",
         tag_detected: "⚠️ INJECTION CONFIRMED BY JAC",
@@ -88,6 +90,8 @@ const translations = {
         tab_safe: "Limpia ($450)",
         tab_custom: "Sandbox",
         payload_title: "PAYLOAD DE FACTURA (JSON)",
+        payload_locked: "PRESET BLOQUEADO — USA LA PESTAÑA SANDBOX PARA EDITAR",
+        payload_editable: "EDITABLE — PEGA UN PAYLOAD Y EJECUTA FORKGUARD",
         tag_unknown: "Sin escanear",
         tag_clean: "Sin inyección según el clasificador Jac",
         tag_detected: "⚠️ INYECCIÓN CONFIRMADA POR JAC",
@@ -153,6 +157,7 @@ function changeLanguage(lang) {
         const key = el.getAttribute("data-i18n");
         if (T(key)) el.textContent = T(key);
     });
+    updatePayloadMode();
     if (lastReport) renderAuditTab();
 }
 
@@ -218,6 +223,18 @@ function activePayload() {
     }
 }
 
+// Make the locked/editable state of the payload box unmistakable — the box
+// looks typeable on the preset tabs and would otherwise swallow keystrokes.
+function updatePayloadMode() {
+    const editable = currentTab === "custom";
+    const hint = $("payload-mode");
+    if (hint) {
+        hint.textContent = T(editable ? "payload_editable" : "payload_locked");
+        hint.classList.toggle("editable", editable);
+    }
+    $("doc-preview-textarea").classList.toggle("editable", editable);
+}
+
 function selectInvoice(tab) {
     currentTab = tab;
     document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
@@ -225,6 +242,7 @@ function selectInvoice(tab) {
 
     const ta = $("doc-preview-textarea");
     ta.readOnly = tab !== "custom";
+    updatePayloadMode();
     const p = presets[tab];
     ta.value = p ? JSON.stringify(p, null, 2) : "// backend offline — presets unavailable";
 
