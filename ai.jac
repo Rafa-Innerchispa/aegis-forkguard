@@ -43,8 +43,17 @@ glob SECRET_MARKERS: list[str] = [
     "password", "secret", "sk-"
 ];
 
+# Provider keys are read from the environment ONLY - never hardcoded, never
+# committed. With no key set, ForkGuard runs fully deterministically.
+glob PROVIDER_KEYS: list[str] = ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GROQ_API_KEY"];
+
 def llm_enabled() -> bool {
-    return bool(os.environ.get("OPENAI_API_KEY", "") or os.environ.get("ANTHROPIC_API_KEY", ""));
+    for k in PROVIDER_KEYS {
+        if os.environ.get(k, "") != "" {
+            return True;
+        }
+    }
+    return False;
 }
 
 def llm_model_name() -> str {
@@ -52,7 +61,13 @@ def llm_model_name() -> str {
     if configured != "" {
         return configured;
     }
-    return ("claude-sonnet-4-6") if os.environ.get("ANTHROPIC_API_KEY", "") else ("gpt-4o-mini");
+    if os.environ.get("ANTHROPIC_API_KEY", "") != "" {
+        return "claude-sonnet-4-6";
+    }
+    if os.environ.get("GROQ_API_KEY", "") != "" {
+        return "groq/llama-3.3-70b-versatile";
+    }
+    return "gpt-4o-mini";
 }
 
 # ---------------------------------------------------------------------------
@@ -132,7 +147,7 @@ def classify_instruction(text: str, visible_total: float, verified_destination: 
         return det;
     }
     try {
-        ai = classify_untrusted_text_llm(text, visible_total, verified_destination);
+        ai = classify_untrusted_text_llm(text, visible_total, verified_destination) as InjectionReport;
         # Hard rule: the deterministic verdict can only be widened, never
         # narrowed, by the LLM (an LLM "all clear" cannot unflag markers).
         det.mode = "llm+deterministic";

@@ -1,0 +1,151 @@
+<svg viewBox="0 0 1090 700" width="1090" height="700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ForkGuard decision graph: the injected $45,000 branch is rejected and the verified $450 branch is committed">
+<style>.glabel{fill:#f9fafb;font-size:12.5px;font-weight:700;font-family:ui-monospace,Menlo,Consolas,monospace}.gsub{fill:#9ca3af;font-size:10px;font-family:ui-monospace,Menlo,Consolas,monospace}.el{fill:#64748b;font-size:8.5px;font-family:ui-monospace,Menlo,Consolas,monospace}</style>
+<rect width="1090" height="700" fill="#040711"/>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/></marker></defs>
+<path d="M 330 312 C 290.0 312, 290.0 394, 250 394" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>DERIVED_FROM: ACTION -&gt; EV-UNTRUSTED-TEXT</title></path>
+<path d="M 505 312 C 552.5 312, 552.5 102, 600 102" stroke="#06b6d4" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>FORKS_TO: ACTION -&gt; BR-ALLOW</title></path>
+<text class="el" x="552.5" y="203.0" text-anchor="middle">FORKS_TO</text>
+<path d="M 600 102 C 425.0 102, 425.0 394, 250 394" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>DERIVED_FROM: BR-ALLOW -&gt; EV-UNTRUSTED-TEXT</title></path>
+<path d="M 795 102 C 792.5 102, 792.5 84, 790 84" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>HAS_VIOLATION: BR-ALLOW -&gt; VIO-ALLOW-POL-001</title></path>
+<path d="M 922 84 C 941.0 84, 941.0 122, 960 122" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>VIOLATES: VIO-ALLOW-POL-001 -&gt; POL-001</title></path>
+<text class="el" x="941.0" y="99.0" text-anchor="middle">VIOLATES</text>
+<path d="M 795 102 C 792.5 102, 792.5 124, 790 124" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>HAS_VIOLATION: BR-ALLOW -&gt; VIO-ALLOW-POL-002</title></path>
+<path d="M 922 124 C 941.0 124, 941.0 212, 960 212" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>VIOLATES: VIO-ALLOW-POL-002 -&gt; POL-002</title></path>
+<text class="el" x="941.0" y="164.0" text-anchor="middle">VIOLATES</text>
+<path d="M 795 102 C 792.5 102, 792.5 164, 790 164" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>HAS_VIOLATION: BR-ALLOW -&gt; VIO-ALLOW-POL-003</title></path>
+<path d="M 922 164 C 941.0 164, 941.0 302, 960 302" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>VIOLATES: VIO-ALLOW-POL-003 -&gt; POL-003</title></path>
+<text class="el" x="941.0" y="229.0" text-anchor="middle">VIOLATES</text>
+<path d="M 795 102 C 792.5 102, 792.5 204, 790 204" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>HAS_VIOLATION: BR-ALLOW -&gt; VIO-ALLOW-POL-004</title></path>
+<path d="M 922 204 C 941.0 204, 941.0 392, 960 392" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>VIOLATES: VIO-ALLOW-POL-004 -&gt; POL-004</title></path>
+<text class="el" x="941.0" y="294.0" text-anchor="middle">VIOLATES</text>
+<path d="M 795 102 C 877.5 102, 877.5 122, 960 122" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ALLOW -&gt; POL-001</title></path>
+<path d="M 795 102 C 877.5 102, 877.5 212, 960 212" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ALLOW -&gt; POL-002</title></path>
+<path d="M 795 102 C 877.5 102, 877.5 302, 960 302" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ALLOW -&gt; POL-003</title></path>
+<path d="M 795 102 C 877.5 102, 877.5 392, 960 392" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ALLOW -&gt; POL-004</title></path>
+<path d="M 795 102 C 877.5 102, 877.5 482, 960 482" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ALLOW -&gt; POL-005</title></path>
+<path d="M 505 312 C 552.5 312, 552.5 232, 600 232" stroke="#06b6d4" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>FORKS_TO: ACTION -&gt; BR-BLOCK</title></path>
+<text class="el" x="552.5" y="268.0" text-anchor="middle">FORKS_TO</text>
+<path d="M 795 232 C 877.5 232, 877.5 122, 960 122" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-BLOCK -&gt; POL-001</title></path>
+<path d="M 795 232 C 877.5 232, 877.5 212, 960 212" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-BLOCK -&gt; POL-002</title></path>
+<path d="M 795 232 C 877.5 232, 877.5 302, 960 302" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-BLOCK -&gt; POL-003</title></path>
+<path d="M 795 232 C 877.5 232, 877.5 392, 960 392" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-BLOCK -&gt; POL-004</title></path>
+<path d="M 795 232 C 877.5 232, 877.5 482, 960 482" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-BLOCK -&gt; POL-005</title></path>
+<path d="M 505 312 C 552.5 312, 552.5 362, 600 362" stroke="#06b6d4" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>FORKS_TO: ACTION -&gt; BR-RESTRICT</title></path>
+<text class="el" x="552.5" y="333.0" text-anchor="middle">FORKS_TO</text>
+<path d="M 600 362 C 425.0 362, 425.0 160, 250 160" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>DERIVED_FROM: BR-RESTRICT -&gt; EV-INVOICE-TOTAL</title></path>
+<path d="M 600 362 C 425.0 362, 425.0 472, 250 472" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>DERIVED_FROM: BR-RESTRICT -&gt; EV-VENDOR-DEST</title></path>
+<path d="M 795 362 C 877.5 362, 877.5 122, 960 122" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-RESTRICT -&gt; POL-001</title></path>
+<path d="M 795 362 C 877.5 362, 877.5 212, 960 212" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-RESTRICT -&gt; POL-002</title></path>
+<path d="M 795 362 C 877.5 362, 877.5 302, 960 302" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-RESTRICT -&gt; POL-003</title></path>
+<path d="M 795 362 C 877.5 362, 877.5 392, 960 392" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-RESTRICT -&gt; POL-004</title></path>
+<path d="M 795 362 C 877.5 362, 877.5 482, 960 482" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-RESTRICT -&gt; POL-005</title></path>
+<path d="M 505 312 C 552.5 312, 552.5 492, 600 492" stroke="#06b6d4" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>FORKS_TO: ACTION -&gt; BR-ADVERSARIAL</title></path>
+<text class="el" x="552.5" y="398.0" text-anchor="middle">FORKS_TO</text>
+<path d="M 600 492 C 425.0 492, 425.0 394, 250 394" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>DERIVED_FROM: BR-ADVERSARIAL -&gt; EV-UNTRUSTED-TEXT</title></path>
+<path d="M 795 492 C 792.5 492, 792.5 474, 790 474" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>HAS_VIOLATION: BR-ADVERSARIAL -&gt; VIO-ADVERSARIAL-POL-001</title></path>
+<path d="M 922 474 C 941.0 474, 941.0 122, 960 122" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>VIOLATES: VIO-ADVERSARIAL-POL-001 -&gt; POL-001</title></path>
+<text class="el" x="941.0" y="294.0" text-anchor="middle">VIOLATES</text>
+<path d="M 795 492 C 792.5 492, 792.5 514, 790 514" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>HAS_VIOLATION: BR-ADVERSARIAL -&gt; VIO-ADVERSARIAL-POL-002</title></path>
+<path d="M 922 514 C 941.0 514, 941.0 212, 960 212" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>VIOLATES: VIO-ADVERSARIAL-POL-002 -&gt; POL-002</title></path>
+<text class="el" x="941.0" y="359.0" text-anchor="middle">VIOLATES</text>
+<path d="M 795 492 C 792.5 492, 792.5 554, 790 554" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>HAS_VIOLATION: BR-ADVERSARIAL -&gt; VIO-ADVERSARIAL-POL-003</title></path>
+<path d="M 922 554 C 941.0 554, 941.0 302, 960 302" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>VIOLATES: VIO-ADVERSARIAL-POL-003 -&gt; POL-003</title></path>
+<text class="el" x="941.0" y="424.0" text-anchor="middle">VIOLATES</text>
+<path d="M 795 492 C 792.5 492, 792.5 594, 790 594" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>HAS_VIOLATION: BR-ADVERSARIAL -&gt; VIO-ADVERSARIAL-POL-004</title></path>
+<path d="M 922 594 C 941.0 594, 941.0 392, 960 392" stroke="#f43f5e" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>VIOLATES: VIO-ADVERSARIAL-POL-004 -&gt; POL-004</title></path>
+<text class="el" x="941.0" y="489.0" text-anchor="middle">VIOLATES</text>
+<path d="M 795 492 C 877.5 492, 877.5 122, 960 122" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ADVERSARIAL -&gt; POL-001</title></path>
+<path d="M 795 492 C 877.5 492, 877.5 212, 960 212" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ADVERSARIAL -&gt; POL-002</title></path>
+<path d="M 795 492 C 877.5 492, 877.5 302, 960 302" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ADVERSARIAL -&gt; POL-003</title></path>
+<path d="M 795 492 C 877.5 492, 877.5 392, 960 392" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ADVERSARIAL -&gt; POL-004</title></path>
+<path d="M 795 492 C 877.5 492, 877.5 482, 960 482" stroke="#1e293b" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>EVALUATED_AGAINST: BR-ADVERSARIAL -&gt; POL-005</title></path>
+<path d="M 760 632 C 680.0 632, 680.0 362, 600 362" stroke="#10b981" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>SELECTS: DECISION -&gt; BR-RESTRICT</title></path>
+<text class="el" x="680.0" y="493.0" text-anchor="middle">SELECTS</text>
+<path d="M 600 632 C 425.0 632, 425.0 472, 250 472" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>SUPPORTED_BY: DECISION -&gt; EV-VENDOR-DEST</title></path>
+<path d="M 600 632 C 425.0 632, 425.0 550, 250 550" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>SUPPORTED_BY: DECISION -&gt; EV-VENDOR-STATUS</title></path>
+<path d="M 600 632 C 425.0 632, 425.0 160, 250 160" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>SUPPORTED_BY: DECISION -&gt; EV-INVOICE-TOTAL</title></path>
+<path d="M 600 632 C 425.0 632, 425.0 316, 250 316" stroke="#475569" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>SUPPORTED_BY: DECISION -&gt; EV-POLICY-LIMIT</title></path>
+<path d="M 760 632 C 810.0 632, 810.0 632, 860 632" stroke="#10b981" stroke-width="1.3" fill="none" opacity="0.55" marker-end="url(#arr)"><title>COMMITS: DECISION -&gt; MOCKTX</title></path>
+<text class="el" x="810.0" y="628.0" text-anchor="middle">COMMITS</text>
+<g><rect x="90" y="60" width="160" height="44" rx="9" fill="#0d1322" stroke="#06b6d4" stroke-width="1.4"><title>Evidence - purchase_order | document_visible</title></rect>
+<text class="glabel" x="100" y="78">purchase_order</text>
+<text class="gsub" x="100" y="94">document_visible</text></g>
+<g><rect x="90" y="138" width="160" height="44" rx="9" fill="#0d1322" stroke="#06b6d4" stroke-width="1.4"><title>Evidence - visible_total | document_visible</title></rect>
+<text class="glabel" x="100" y="156">visible_total</text>
+<text class="gsub" x="100" y="172">document_visible</text></g>
+<g><rect x="90" y="216" width="160" height="44" rx="9" fill="#0d1322" stroke="#06b6d4" stroke-width="1.4"><title>Evidence - vendor | document_visible</title></rect>
+<text class="glabel" x="100" y="234">vendor</text>
+<text class="gsub" x="100" y="250">document_visible</text></g>
+<g><rect x="90" y="294" width="160" height="44" rx="9" fill="#0d1322" stroke="#10b981" stroke-width="1.4"><title>Evidence - max_auto_payment | verified</title></rect>
+<text class="glabel" x="100" y="312">max_auto_payment</text>
+<text class="gsub" x="100" y="328">verified</text></g>
+<g><rect x="90" y="372" width="160" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Evidence - embedded_untrusted_text | untrusted</title></rect>
+<text class="glabel" x="100" y="390">embedded_untrusted_text</text>
+<text class="gsub" x="100" y="406">untrusted</text></g>
+<g><rect x="90" y="450" width="160" height="44" rx="9" fill="#0d1322" stroke="#10b981" stroke-width="1.4"><title>Evidence - verified_destination | verified</title></rect>
+<text class="glabel" x="100" y="468">verified_destination</text>
+<text class="gsub" x="100" y="484">verified</text></g>
+<g><rect x="90" y="528" width="160" height="44" rx="9" fill="#0d1322" stroke="#10b981" stroke-width="1.4"><title>Evidence - status | verified</title></rect>
+<text class="glabel" x="100" y="546">status</text>
+<text class="gsub" x="100" y="562">verified</text></g>
+<g><rect x="330" y="290" width="175" height="44" rx="9" fill="#0d1322" stroke="#f59e0b" stroke-width="1.4"><title>ProposedAction - pay_invoice | $45000.0 -&gt; acct_demo_external_991</title></rect>
+<text class="glabel" x="340" y="308">pay_invoice</text>
+<text class="gsub" x="340" y="324">$45000.0 -&gt; acct_demo_external</text></g>
+<g><rect x="600" y="80" width="195" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>FutureBranch - Allow As Requested | risk 100 | utility -100</title></rect>
+<text class="glabel" x="610" y="98">Allow As Requested</text>
+<text class="gsub" x="610" y="114">risk 100 | utility -100</text></g>
+<g><rect x="790" y="62" width="132" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Violation - POL-001 | critical</title></rect>
+<text class="glabel" x="800" y="80">POL-001</text>
+<text class="gsub" x="800" y="96">critical</text></g>
+<g><rect x="790" y="102" width="132" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Violation - POL-002 | critical</title></rect>
+<text class="glabel" x="800" y="120">POL-002</text>
+<text class="gsub" x="800" y="136">critical</text></g>
+<g><rect x="790" y="142" width="132" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Violation - POL-003 | critical</title></rect>
+<text class="glabel" x="800" y="160">POL-003</text>
+<text class="gsub" x="800" y="176">critical</text></g>
+<g><rect x="790" y="182" width="132" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Violation - POL-004 | high</title></rect>
+<text class="glabel" x="800" y="200">POL-004</text>
+<text class="gsub" x="800" y="216">high</text></g>
+<g><rect x="600" y="210" width="195" height="44" rx="9" fill="#0d1322" stroke="#64748b" stroke-width="1.4"><title>FutureBranch - Block Everything | risk 0 | utility -70</title></rect>
+<text class="glabel" x="610" y="228">Block Everything</text>
+<text class="gsub" x="610" y="244">risk 0 | utility -70</text></g>
+<g><rect x="600" y="340" width="195" height="44" rx="9" fill="#0d1322" stroke="#10b981" stroke-width="2.4"><title>FutureBranch - Restrict &amp; Verify | risk 0 | utility 80</title></rect>
+<text class="glabel" x="610" y="358">Restrict &amp; Verify</text>
+<text class="gsub" x="610" y="374">risk 0 | utility 80</text></g>
+<g><rect x="600" y="470" width="195" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>FutureBranch - Adversarial Interpretation | risk 100 | utility -100</title></rect>
+<text class="glabel" x="610" y="488">Adversarial Interpretati</text>
+<text class="gsub" x="610" y="504">risk 100 | utility -100</text></g>
+<g><rect x="790" y="452" width="132" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Violation - POL-001 | critical</title></rect>
+<text class="glabel" x="800" y="470">POL-001</text>
+<text class="gsub" x="800" y="486">critical</text></g>
+<g><rect x="790" y="492" width="132" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Violation - POL-002 | critical</title></rect>
+<text class="glabel" x="800" y="510">POL-002</text>
+<text class="gsub" x="800" y="526">critical</text></g>
+<g><rect x="790" y="532" width="132" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Violation - POL-003 | critical</title></rect>
+<text class="glabel" x="800" y="550">POL-003</text>
+<text class="gsub" x="800" y="566">critical</text></g>
+<g><rect x="790" y="572" width="132" height="44" rx="9" fill="#0d1322" stroke="#f43f5e" stroke-width="1.4"><title>Violation - POL-004 | high</title></rect>
+<text class="glabel" x="800" y="590">POL-004</text>
+<text class="gsub" x="800" y="606">high</text></g>
+<g><rect x="960" y="100" width="110" height="44" rx="9" fill="#0d1322" stroke="#8b5cf6" stroke-width="1.4"><title>Policy - POL-001 | critical</title></rect>
+<text class="glabel" x="970" y="118">POL-001</text>
+<text class="gsub" x="970" y="134">critical</text></g>
+<g><rect x="960" y="190" width="110" height="44" rx="9" fill="#0d1322" stroke="#8b5cf6" stroke-width="1.4"><title>Policy - POL-002 | critical</title></rect>
+<text class="glabel" x="970" y="208">POL-002</text>
+<text class="gsub" x="970" y="224">critical</text></g>
+<g><rect x="960" y="280" width="110" height="44" rx="9" fill="#0d1322" stroke="#8b5cf6" stroke-width="1.4"><title>Policy - POL-003 | critical</title></rect>
+<text class="glabel" x="970" y="298">POL-003</text>
+<text class="gsub" x="970" y="314">critical</text></g>
+<g><rect x="960" y="370" width="110" height="44" rx="9" fill="#0d1322" stroke="#8b5cf6" stroke-width="1.4"><title>Policy - POL-004 | high</title></rect>
+<text class="glabel" x="970" y="388">POL-004</text>
+<text class="gsub" x="970" y="404">high</text></g>
+<g><rect x="960" y="460" width="110" height="44" rx="9" fill="#0d1322" stroke="#8b5cf6" stroke-width="1.4"><title>Policy - POL-005 | critical</title></rect>
+<text class="glabel" x="970" y="478">POL-005</text>
+<text class="gsub" x="970" y="494">critical</text></g>
+<g><rect x="600" y="610" width="160" height="44" rx="9" fill="#0d1322" stroke="#06b6d4" stroke-width="1.4"><title>Decision - Decision | RESTRICT (committed)</title></rect>
+<text class="glabel" x="610" y="628">Decision</text>
+<text class="gsub" x="610" y="644">RESTRICT (committed)</text></g>
+<g><rect x="860" y="610" width="205" height="44" rx="9" fill="#0d1322" stroke="#10b981" stroke-width="1.4"><title>MockTransaction - $450.00 SIMULATED | acct_demo_verified_1042</title></rect>
+<text class="glabel" x="870" y="628">$450.00 SIMULATED</text>
+<text class="gsub" x="870" y="644">acct_demo_verified_1042</text></g>
+</svg>

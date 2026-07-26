@@ -138,7 +138,7 @@ def find_evidence(run: ScenarioRun, ev_id: str) -> Evidence | None {
 # types degrade to safe defaults instead of crashing the pipeline.
 def safe_float(value: any, fallback: float) -> float {
     try {
-        return float(value);
+        return float(str(value));
     } except (TypeError, ValueError) {
         return fallback;
     }
