@@ -106,7 +106,7 @@ def verified_facts(run: ScenarioRun) -> VerifiedFacts {
     limit = 1000.0;
     for p in get_policies(run) {
         if p.deterministic_rule == "amount_within_auto_limit" {
-            limit = float(p.params.get("max_auto_payment", 1000.0) as float);
+            limit = safe_float(p.params.get("max_auto_payment", 1000.0), 1000.0);
         }
     }
     if vendor is None {
@@ -134,6 +134,16 @@ def find_evidence(run: ScenarioRun, ev_id: str) -> Evidence | None {
 #    plus the TRUSTED server-side vendor record and policy store.
 # ---------------------------------------------------------------------------
 
+# The sandbox lets users submit arbitrary JSON; coerce defensively so junk
+# types degrade to safe defaults instead of crashing the pipeline.
+def safe_float(value: any, fallback: float) -> float {
+    try {
+        return float(value);
+    } except (TypeError, ValueError) {
+        return fallback;
+    }
+}
+
 walker ingest_walker {
     has payload: dict[str, any];
     has vendor_record: dict[str, any];
@@ -145,8 +155,8 @@ walker ingest_walker {
         vendor_name = str(self.payload.get("vendor_name", "Bay Office Supply"));
         claimed_vendor_id = str(self.payload.get("claimed_vendor_id", "VENDOR-1042"));
         purchase_order = str(self.payload.get("purchase_order", "PO-7741"));
-        visible_total = float(self.payload.get("visible_total", 450.0) as float);
-        embedded = str(self.payload.get("embedded_untrusted_text", ""));
+        visible_total = safe_float(self.payload.get("visible_total", 450.0), 450.0);
+        embedded = str(self.payload.get("embedded_untrusted_text", "") or "");
 
         doc = Document(doc_id=f"DOC-{invoice_id}");
         run +>:Contains(kind="document"):+> doc;
@@ -167,7 +177,7 @@ walker ingest_walker {
             vendor_id=str(self.vendor_record.get("vendor_id", "")),
             name=str(self.vendor_record.get("name", "")),
             verified_destination=str(self.vendor_record.get("verified_destination", "")),
-            expected_invoice_total=float(self.vendor_record.get("expected_invoice_total", 0.0) as float),
+            expected_invoice_total=safe_float(self.vendor_record.get("expected_invoice_total", 0.0), 0.0),
             status=str(self.vendor_record.get("status", "unverified"))
         );
         run +>:Contains(kind="vendor"):+> vendor;
