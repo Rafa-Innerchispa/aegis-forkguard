@@ -122,6 +122,37 @@ body {
     gap: 0.85rem;
 }
 
+/* Language Selector Styling */
+.lang-selector-box {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-glass);
+    border-radius: 10px;
+    padding: 0.35rem 0.75rem;
+}
+
+.lang-icon {
+    font-size: 1rem;
+}
+
+.lang-selector-box select {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--font-outfit);
+    font-size: 0.85rem;
+    font-weight: 700;
+    outline: none;
+    cursor: pointer;
+}
+
+.lang-selector-box select option {
+    background: #0f172a;
+    color: #fff;
+}
+
 .live-status-pill {
     display: flex;
     align-items: center;

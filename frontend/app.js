@@ -1,4 +1,87 @@
-// AEGIS ForkGuard Interactive Frontend Controller
+// AEGIS ForkGuard Interactive Controller with Multilingual i18n Support
+
+const translations = {
+    en: {
+        tagline: "Counterfactual Execution Firewall for Autonomous AI Agents • JacHacks SF 2026",
+        engine_active: "Jac Engine Active",
+        kpi_mode: "EXECUTION MODE",
+        kpi_risk: "MAX RISK SCORE",
+        kpi_futures: "FUTURES EVALUATED",
+        kpi_futures_val: "4 Branches",
+        kpi_committed: "COMMITTED SAFE BRANCH",
+        kpi_none: "None",
+        inbox_title: "📥 Attack Inbox & Document Feed",
+        agent_badge: "Financial Agent Vector",
+        tab_safe: "Clean Invoice ($450)",
+        tab_attacked: "Prompt Injection ($45k)",
+        tab_custom: "Custom Sandbox",
+        payload_title: "RAW INVOICE PAYLOAD (JSON)",
+        tag_clean: "No Injection Detected",
+        tag_detected: "⚠️ PROMPT INJECTION DETECTED",
+        btn_vulnerable: "⚡ Run Vulnerable Agent (Unprotected)",
+        btn_forkguard: "🛡️ Run with AEGIS ForkGuard",
+        btn_reset: "🔄 Reset Simulation",
+        graph_title: "🌳 Counterfactual Future Defense Graph",
+        graph_ready: "Ready for Simulation",
+        empty_title: "Counterfactual Firewall Ready",
+        empty_desc: "Select an invoice from the feed and click Run with AEGIS ForkGuard to simulate 4 execution futures in Jac.",
+        audit_title: "📋 Forensic Audit & Evidence Timeline",
+        audit_pending: "Audit Pending",
+        audit_tab_summary: "Summary Report",
+        audit_tab_evidence: "Evidence Records",
+        audit_tab_trace: "Attack Trace",
+        no_audit: "No execution audit recorded yet.",
+        footer_text: "AEGIS ForkGuard • Developed natively in Jaclang (v0.16.7) for JacHacks SF 2026 • 100% Local Simulation Engine"
+    },
+    es: {
+        tagline: "Firewall de Ejecución Contrafactual para Agentes de IA • JacHacks SF 2026",
+        engine_active: "Motor Jac Activo",
+        kpi_mode: "MODO DE EJECUCIÓN",
+        kpi_risk: "PUNTAJE DE RIESGO MÁX",
+        kpi_futures: "FUTUROS EVALUADOS",
+        kpi_futures_val: "4 Ramas",
+        kpi_committed: "RAMA SEGURA COMPROMETIDA",
+        kpi_none: "Ninguna",
+        inbox_title: "📥 Bandeja de Entrada de Ataques",
+        agent_badge: "Vector de Agente Financiero",
+        tab_safe: "Factura Limpia ($450)",
+        tab_attacked: "Prompt Injection ($45k)",
+        tab_custom: "Sandbox Personalizado",
+        payload_title: "PAYLOAD DE FACTURA CRUDA (JSON)",
+        tag_clean: "Sin Inyección Detectada",
+        tag_detected: "⚠️ PROMPT INJECTION DETECTADO",
+        btn_vulnerable: "⚡ Ejecutar Agente Vulnerable (Sin Protección)",
+        btn_forkguard: "🛡️ Ejecutar con AEGIS ForkGuard",
+        btn_reset: "🔄 Reiniciar Simulación",
+        graph_title: "🌳 Grafo de Defensa de Futuros Contrafactuales",
+        graph_ready: "Listo para Simulación",
+        empty_title: "Firewall Contrafactual Listo",
+        empty_desc: "Selecciona una factura de la bandeja y haz clic en Ejecutar con AEGIS ForkGuard para simular 4 futuros en Jac.",
+        audit_title: "📋 Auditoría Forense y Línea de Tiempo de Evidencias",
+        audit_pending: "Auditoría Pendiente",
+        audit_tab_summary: "Reporte Resumen",
+        audit_tab_evidence: "Registros de Evidencias",
+        audit_tab_trace: "Trazabilidad de Ataque",
+        no_audit: "Aún no se ha grabado ninguna auditoría de ejecución.",
+        footer_text: "AEGIS ForkGuard • Desarrollado nativamente en Jaclang (v0.16.7) para JacHacks SF 2026 • Motor de Simulación Local"
+    }
+};
+
+let currentLang = "en";
+let currentTab = "safe";
+let currentAuditTab = "summary";
+let lastExecutionResult = null;
+
+function changeLanguage(lang) {
+    currentLang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(elem => {
+        const key = elem.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+            elem.textContent = translations[lang][key];
+        }
+    });
+    if (lastExecutionResult) renderAuditTab();
+}
 
 const presetInvoices = {
     safe: {
@@ -27,10 +110,6 @@ const presetInvoices = {
     }
 };
 
-let currentTab = "safe";
-let currentAuditTab = "summary";
-let lastExecutionResult = null;
-
 function selectInvoice(tab) {
     currentTab = tab;
     
@@ -52,15 +131,15 @@ function selectInvoice(tab) {
     const isAttacked = payloadText.includes("Ignore previous") || payloadText.includes("$45,000");
     
     if (isAttacked) {
-        indicator.textContent = "⚠️ PROMPT INJECTION DETECTED";
+        indicator.textContent = translations[currentLang].tag_detected;
         indicator.className = "injection-indicator detected";
     } else {
-        indicator.textContent = "✅ CLEAN DOCUMENT";
+        indicator.textContent = translations[currentLang].tag_clean;
         indicator.className = "injection-indicator";
     }
 }
 
-// Initialize
+// Initial setup
 selectInvoice("safe");
 
 async function runVulnerable() {
@@ -131,12 +210,12 @@ function resetDemo() {
     document.getElementById("graph-tree-container").innerHTML = `
         <div class="graph-empty-state">
             <div class="empty-icon">🛡️</div>
-            <h3>Counterfactual Firewall Ready</h3>
-            <p>Select an invoice from the feed and click <strong>Run with AEGIS ForkGuard</strong> to simulate 4 execution futures in Jac.</p>
+            <h3>${translations[currentLang].empty_title}</h3>
+            <p>${translations[currentLang].empty_desc}</p>
         </div>
     `;
     document.getElementById("audit-body-container").innerHTML = `
-        <div class="empty-state-text">No execution audit recorded yet.</div>
+        <div class="empty-state-text">${translations[currentLang].no_audit}</div>
     `;
 }
 
@@ -160,7 +239,7 @@ function updateKPIs(mode, risk, futures, committed) {
 function renderVulnerableGraph(data) {
     const isAttacked = currentTab === "attacked";
     
-    document.getElementById("graph-status-tag").textContent = "⚡ Unprotected Run Executed";
+    document.getElementById("graph-status-tag").textContent = currentLang === "es" ? "⚡ Ejecutado Agente Vulnerable" : "⚡ Unprotected Run Executed";
     document.getElementById("graph-status-tag").className = "cyber-badge";
     
     const html = `
@@ -179,7 +258,7 @@ function renderVulnerableGraph(data) {
 
 function renderForkGuardGraph(data) {
     const branches = data.branches || [];
-    document.getElementById("graph-status-tag").textContent = "🛡️ 4 Futures Evaluated";
+    document.getElementById("graph-status-tag").textContent = currentLang === "es" ? "🛡️ 4 Futuros Evaluados" : "🛡️ 4 Futures Evaluated";
     document.getElementById("graph-status-tag").className = "cyber-badge emerald-badge";
     
     let html = "";
@@ -226,14 +305,14 @@ function renderAuditTab() {
         if (type === "vulnerable") {
             container.innerHTML = `
                 <div style="color:var(--accent-rose); font-weight:800; font-size:1rem; margin-bottom:8px;">
-                    🚨 VULNERABLE RUN EXECUTED — NO COUNTERFACTUAL FIREWALL
+                    ${currentLang === "es" ? "🚨 AGENTE VULNERABLE EJECUTADO — SIN FIREWALL CONTRAFACTUAL" : "🚨 VULNERABLE RUN EXECUTED — NO COUNTERFACTUAL FIREWALL"}
                 </div>
                 <p style="color:var(--text-muted);">${data.vulnerable_result ? data.vulnerable_result.message : "Vulnerable agent run completed."}</p>
             `;
         } else {
             container.innerHTML = `
                 <div style="color:var(--accent-emerald); font-weight:800; font-size:1.05rem; margin-bottom:8px;">
-                    🛡️ SAFE FUTURE COMMITTED — RESTRICT_AND_VERIFY ($450.00)
+                    ${currentLang === "es" ? "🛡️ FUTURO SEGURO COMPROMETIDO — RESTRICT_AND_VERIFY ($450.00)" : "🛡️ SAFE FUTURE COMMITTED — RESTRICT_AND_VERIFY ($450.00)"}
                 </div>
                 <p style="color:#e5e7eb; font-size:0.9rem;">
                     ${report.summary || "ForkGuard evaluated 4 counterfactual futures and committed the safest valid outcome."}
@@ -243,7 +322,7 @@ function renderAuditTab() {
     } else if (currentAuditTab === "evidence") {
         const evidenceList = report.evidence || data.evidence || [];
         if (!evidenceList.length) {
-            container.innerHTML = `<p style="color:var(--accent-emerald);">✅ No policy violations or injection evidence detected.</p>`;
+            container.innerHTML = `<p style="color:var(--accent-emerald);">✅ ${currentLang === "es" ? "Sin violaciones de política ni evidencias de inyección." : "No policy violations or injection evidence detected."}</p>`;
         } else {
             let evHtml = `<div style="display:flex; flex-direction:column; gap:8px;">`;
             evidenceList.forEach(e => {
@@ -261,9 +340,9 @@ function renderAuditTab() {
         const trace = report.attack_trace || data.attack_trace || {};
         container.innerHTML = `
             <div style="font-family:var(--font-mono); font-size:0.8rem; background:#040711; padding:12px; border-radius:8px; border:1px solid var(--border-glass);">
-                <div><strong style="color:var(--accent-cyan);">ENTRY VECTOR:</strong> ${trace.entry_vector || 'Invoice raw_content prompt injection'}</div>
-                <div style="margin-top:6px;"><strong style="color:var(--accent-rose);">ATTEMPTED EXFILTRATION:</strong> ${trace.attempted_exfiltration || 'Credentials & $45,000 wire transfer'}</div>
-                <div style="margin-top:6px;"><strong style="color:var(--accent-emerald);">FIREWALL STATUS:</strong> ${trace.attack_vector_status || 'CONTAINED_BY_FORKGUARD'}</div>
+                <div><strong style="color:var(--accent-cyan);">${currentLang === "es" ? "VECTOR DE ENTRADA:" : "ENTRY VECTOR:"}</strong> ${trace.entry_vector || 'Invoice raw_content prompt injection'}</div>
+                <div style="margin-top:6px;"><strong style="color:var(--accent-rose);">${currentLang === "es" ? "EXFILTRACIÓN INTENTADA:" : "ATTEMPTED EXFILTRATION:"}</strong> ${trace.attempted_exfiltration || 'Credentials & $45,000 wire transfer'}</div>
+                <div style="margin-top:6px;"><strong style="color:var(--accent-emerald);">${currentLang === "es" ? "ESTADO DEL FIREWALL:" : "FIREWALL STATUS:"}</strong> ${trace.attack_vector_status || 'CONTAINED_BY_FORKGUARD'}</div>
             </div>
         `;
     }
