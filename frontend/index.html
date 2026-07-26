@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS ForkGuard — Counterfactual Execution Firewall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header / Mission Control -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="shield-icon">🛡️</div>
+                <div>
+                    <h1>AEGIS ForkGuard</h1>
+                    <p class="tagline">Counterfactual Execution Firewall for AI Agents • JacHacks SF 2026</p>
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-badge" id="fallback-badge">
+                    <span class="dot yellow-dot"></span> Deterministic Fallback Active
+                </div>
+                <div class="status-badge" id="system-status-badge">
+                    <span class="dot green-dot"></span> System Guarded
+                </div>
+            </div>
+        </header>
+
+        <!-- Section 1: Mission Control Bar -->
+        <section class="mission-control-panel">
+            <div class="metric-card">
+                <span class="metric-label">CURRENT MODE</span>
+                <span class="metric-value" id="mode-val">IDLE</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">RISK LEVEL</span>
+                <span class="metric-value risk-low" id="risk-val">LOW (0/100)</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">ACTIVE WALKER</span>
+                <span class="metric-value" id="walker-val">Ready</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">COMMITTED BRANCH</span>
+                <span class="metric-value highlight" id="committed-val">None</span>
+            </div>
+        </section>
+
+        <!-- Main Workspace: 2-Column Grid -->
+        <main class="main-grid">
+            <!-- Left Column: Attack Inbox & Controls -->
+            <div class="left-column">
+                <div class="card attack-inbox-card">
+                    <div class="card-header">
+                        <h2>📥 Attack Inbox (Document Feed)</h2>
+                        <span class="badge info-badge">Simulated Financial Agent</span>
+                    </div>
+
+                    <div class="invoice-selector">
+                        <label class="radio-card" id="card-safe">
+                            <input type="radio" name="invoice-choice" value="safe" checked onchange="selectInvoice('safe')">
+                            <div class="radio-content">
+                                <div class="radio-title">📄 Safe Invoice (INV-2026-0450)</div>
+                                <div class="radio-desc">Acme Office Supplies • $450.00 • Verified</div>
+                            </div>
+                        </label>
+
+                        <label class="radio-card danger-card" id="card-attacked">
+                            <input type="radio" name="invoice-choice" value="attacked" onchange="selectInvoice('attacked')">
+                            <div class="radio-content">
+                                <div class="radio-title">⚠️ Attacked Invoice (Embedded Injection)</div>
+                                <div class="radio-desc">Acme Office Supplies • Prompt Injection ($45,000)</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="document-preview-box">
+                        <div class="box-title">RAW DOCUMENT PAYLOAD</div>
+                        <pre id="doc-preview-content">Loading invoice payload...</pre>
+                    </div>
+
+                    <div class="action-bar">
+                        <button class="btn btn-vulnerable" id="btn-vulnerable" onclick="runVulnerable()">
+                            ⚡ Run Vulnerable Agent
+                        </button>
+                        <button class="btn btn-forkguard" id="btn-forkguard" onclick="runForkGuard()">
+                            🛡️ Run with ForkGuard
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetDemo()">
+                            🔄 Reset Demo
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Future Defense Graph & Incident Report -->
+            <div class="right-column">
+                <!-- Counterfactual Future Branches Graph -->
+                <div class="card graph-card">
+                    <div class="card-header">
+                        <h2>🌳 Counterfactual Future Defense Graph</h2>
+                        <span class="badge" id="graph-status-tag">4 Futures Simulated</span>
+                    </div>
+
+                    <div class="graph-container" id="graph-tree">
+                        <div class="graph-placeholder">Select an invoice and press <strong>Run with ForkGuard</strong> to simulate future execution paths.</div>
+                    </div>
+                </div>
+
+                <!-- Incident Report Panel -->
+                <div class="card report-card">
+                    <div class="card-header">
+                        <h2>📋 Forensic Audit & Incident Report</h2>
+                        <span class="badge" id="report-status-tag">Audit Pending</span>
+                    </div>
+
+                    <div class="report-content" id="report-view">
+                        <div class="empty-state">No audit generated yet. Execute a run above.</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <p>AEGIS ForkGuard • Built natively with <strong>Jaclang (Jaseci Labs)</strong> • 100% Simulation Mode</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

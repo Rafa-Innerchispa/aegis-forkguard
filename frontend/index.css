@@ -1,0 +1,389 @@
+:root {
+    --bg-dark: #0b0f19;
+    --card-bg: rgba(18, 24, 38, 0.75);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --accent-blue: #3b82f6;
+    --accent-emerald: #10b981;
+    --accent-rose: #f43f5e;
+    --accent-amber: #f59e0b;
+    --accent-cyan: #06b6d4;
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    padding: 1.5rem;
+}
+
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.shield-icon {
+    font-size: 2.2rem;
+}
+
+.brand h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.status-bar {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.yellow-dot { background: var(--accent-amber); box-shadow: 0 0 8px var(--accent-amber); }
+.green-dot { background: var(--accent-emerald); box-shadow: 0 0 8px var(--accent-emerald); }
+.red-dot { background: var(--accent-rose); box-shadow: 0 0 8px var(--accent-rose); }
+
+/* Mission Control */
+.mission-control-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.metric-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    backdrop-filter: blur(8px);
+}
+
+.metric-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.metric-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.metric-value.risk-low { color: var(--accent-emerald); }
+.metric-value.risk-high { color: var(--accent-rose); }
+.metric-value.highlight { color: var(--accent-cyan); }
+
+/* Main Grid */
+.main-grid {
+    display: grid;
+    grid-template-columns: 450px 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.25rem;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+}
+
+.card-header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Radio Cards */
+.invoice-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.radio-card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.85rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.radio-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.radio-card.active {
+    border-color: var(--accent-blue);
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.radio-card.danger-card.active {
+    border-color: var(--accent-rose);
+    background: rgba(244, 63, 94, 0.08);
+}
+
+.radio-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.radio-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Preview Box */
+.document-preview-box {
+    background: #060911;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.85rem;
+}
+
+.box-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+pre {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #e5e7eb;
+}
+
+/* Buttons */
+.action-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.btn {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-vulnerable {
+    background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+    color: #fff;
+}
+
+.btn-forkguard {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #d1d5db;
+}
+
+/* Graph UI */
+.graph-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-height: 240px;
+}
+
+.graph-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+}
+
+.branch-node-card {
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.branch-node-card.committed {
+    border-color: var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.12);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.branch-node-card.rejected {
+    border-color: rgba(244, 63, 94, 0.4);
+    background: rgba(244, 63, 94, 0.05);
+}
+
+.branch-node-card.investigation {
+    border-color: rgba(6, 182, 212, 0.4);
+    background: rgba(6, 182, 212, 0.05);
+}
+
+.branch-info h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.branch-info p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+
+.branch-scores {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.score-tag {
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+}
+
+.score-risk { background: rgba(244, 63, 94, 0.2); color: #fda4af; }
+.score-utility { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+
+/* Report View */
+.report-content {
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.report-table th, .report-table td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-table th {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+}
+
+.app-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+}
