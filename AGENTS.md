@@ -27,15 +27,18 @@ asset is now `jac-llmdocs.md`, and it is already out of date relative to `jac gu
 ## Verify before you claim
 
 ```bash
+jac script build                      # ALL FIVE GATES - run this before claiming done
 jac check <file>.jac                  # type-check a single module
 jac test tests/forkguard_tests.jac    # 15 acceptance tests
 jac run main.jac                      # deterministic terminal demo
 jac start main.jac                    # server + dashboard on :8000
-python scripts/langmix.py             # language mix (must stay >=40% Jac)
 jac clean --all --force               # clear caches + persisted graph data
 ```
 
-`jac check` passing is **not** the same as tests passing — run both.
+`jac script build` (implemented in `build.jac`) is the authoritative gate: type check →
+lint → tests → a **real** end-to-end demo asserting the $450 commit → language mix ≥40%.
+It exits non-zero on any failure. `jac check` passing is **not** the same as tests
+passing, and neither proves the demo still works — that's why the pipeline runs all three.
 
 ## Project rules
 

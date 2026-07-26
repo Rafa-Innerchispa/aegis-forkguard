@@ -130,13 +130,27 @@ jac test tests/forkguard_tests.jac
 
 Expected: `Ran 15 tests ... OK`
 
-**Report the language mix:**
+**Verify the whole submission with one command:**
 
 ```bash
-python scripts/langmix.py
+jac script build
 ```
 
-Expected: `Jac share of first-party executable source: 75.2%`
+The build pipeline ([`build.jac`](build.jac), itself written in Jac) runs five gates and
+exits non-zero if any fails — type check every module, lint, run the acceptance suite,
+execute a **real** end-to-end demo and assert it commits exactly $450.00 to the verified
+account, then check the language mix against the 40% floor:
+
+```
+  [PASS] type check            8 modules clean
+  [PASS] lint                  no violations
+  [PASS] acceptance tests      Ran 15 tests
+  [PASS] end-to-end demo       RESTRICT committed $450.0 -> acct_demo_verified_1042
+  [PASS] language mix          79.9% Jac >= 40.0% required
+  BUILD PASSED - submission gates satisfied.
+```
+
+Other shortcuts: `jac script demo`, `jac script serve`, `jac script test`.
 
 ### Using the dashboard
 
@@ -151,9 +165,10 @@ Expected: `Jac share of first-party executable source: 75.2%`
 
 ## How Jac is used
 
-**~75% of first-party executable source is Jac.** Everything that makes a decision is in
-`.jac` — the graph, the walkers, the policies, the scoring, the invariants, the
-orchestration, and the tests. The only Python is an 80-line line-counting script.
+**~80% of first-party executable source is Jac, and the repository contains no Python at
+all.** Everything is in `.jac` — the graph, the walkers, the policies, the scoring, the
+invariants, the orchestration, the tests, and even the build pipeline. The remaining ~20%
+is the browser client (`assets/app.js`), which has to be JavaScript to run in a browser.
 
 ### Nodes and edges (`graph.jac`)
 
@@ -280,7 +295,9 @@ action is never silently converted into an approved one.
 | T09 | Graph UI renders current backend graph state | ✅ |
 | T10 | Rejected branches cite specific evidence and policies | ✅ |
 | T11 | Fresh setup from README reproduces the demo | ✅ |
-| T12 | ≥40% Jac (target 60%) | ✅ 75.2% |
+| T12 | ≥40% Jac (target 60%) | ✅ 79.9% |
+
+All of T01–T08, T10, and T12 are enforced by `jac script build`.
 
 ## Configuration
 
@@ -297,12 +314,18 @@ walkers.jac                 the 11 walkers
 policies.jac                deterministic policy rule engine
 ai.jac                      deterministic classifier + optional by llm
 simulation.jac              mock tools + append-only JSONL audit log
+build.jac                   5-gate build pipeline (jac script build)
 data/                       seeded invoices, vendor record, policy store
 assets/                     command-center dashboard (served by jac start)
 tests/forkguard_tests.jac   15 acceptance tests
-scripts/langmix.py          language-mix reporter
-docs/                       architecture, demo script, submission description
+docs/                       architecture, demo script, test payloads, submission
 ```
+
+### Try to break it yourself
+
+[`docs/test-payloads.md`](docs/test-payloads.md) has four attack payloads with verified
+results — including one engineered to slip under the auto-approval limit *and* use the
+correct account, which is still stopped by provenance scoring and the pre-commit invariant.
 
 ## Known limitations & next steps
 

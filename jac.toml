@@ -15,3 +15,11 @@ host = "127.0.0.1"
 
 [test]
 directory = "tests"
+
+[scripts]
+# One command that gates the whole submission: type check -> lint -> tests ->
+# real end-to-end demo -> language mix. Non-zero exit on any failure.
+build = "jac run build.jac"
+demo = "jac run main.jac"
+serve = "jac start main.jac"
+test = "jac test tests/forkguard_tests.jac"
