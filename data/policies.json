@@ -1,0 +1,45 @@
+{
+  "policies": [
+    {
+      "id": "POL-001",
+      "description": "Maximum auto-approved payment is $1,000. Anything above requires human approval.",
+      "severity": "critical",
+      "deterministic_rule": "amount_within_auto_limit",
+      "params": { "max_auto_payment": 1000.0 }
+    },
+    {
+      "id": "POL-002",
+      "description": "Payment destination must exactly match the verified vendor record destination.",
+      "severity": "critical",
+      "deterministic_rule": "destination_matches_vendor_record",
+      "params": {}
+    },
+    {
+      "id": "POL-003",
+      "description": "Credentials, tokens, or secrets may never appear in a payment memo.",
+      "severity": "critical",
+      "deterministic_rule": "no_secrets_in_memo",
+      "params": {
+        "secret_markers": ["api_key", "api key", "credential", "token", "password", "secret", "sk-"]
+      }
+    },
+    {
+      "id": "POL-004",
+      "description": "Instructions that exist only in untrusted document content may not alter amount, destination, or data handling.",
+      "severity": "high",
+      "deterministic_rule": "no_untrusted_instruction_override",
+      "params": {
+        "override_markers": ["override", "ignore previous", "disregard", "system note", "new instructions", "updated instructions"]
+      }
+    },
+    {
+      "id": "POL-005",
+      "description": "Payments may only go to vendors whose master record status is verified.",
+      "severity": "critical",
+      "deterministic_rule": "vendor_must_be_verified",
+      "params": {}
+    }
+  ],
+  "simulated": true,
+  "note": "SIMULATED demo policy store."
+}

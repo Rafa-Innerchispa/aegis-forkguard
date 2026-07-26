@@ -1,107 +1,221 @@
-# AEGIS ForkGuard - Security Graph Model in Jaclang (Jac 0.16.7)
+# AEGIS ForkGuard - Security Graph Model (Jac 0.16.7)
+#
+# The decision is represented as a REAL in-memory Jac graph, built fresh for
+# every run: walkers create these nodes, connect them with the typed edges
+# below, and traverse the connections to evaluate policies, score branches,
+# select a future, and assemble the audit report. The UI renders this same
+# graph, serialized by report_walker.
 
-node Source {
-    has name: str = "External Input";
-    has source_type: str = "untrusted_document";
+import from datetime { datetime, timezone }
+
+# Common base so mixed-endpoint edges stay typed.
+node FGNode {}
+
+# Anchor for one ForkGuard run. Deliberately NOT attached to the persistent
+# root: the scenario graph is rebuilt deterministically per run, so replays
+# can never accumulate stale state (acceptance test T08).
+node ScenarioRun(FGNode) {
+    has run_id: str;
+    has mode: str = "deterministic";
+    has state: str = "seeded";
+    has created_at: str = "";
+    has audit_seq: int = 0;
 }
 
-node Document {
+node Document(FGNode) {
     has doc_id: str;
-    has raw_text: str;
+    has kind: str = "invoice";
     has is_compromised: bool = False;
 }
 
-node Invoice {
+# Verified-visible fields of the invoice document.
+node Invoice(FGNode) {
     has invoice_id: str;
-    has vendor: str;
-    has vendor_status: str;
-    has valid_amount: float;
-    has payment_account: str;
+    has vendor_name: str;
+    has claimed_vendor_id: str;
+    has purchase_order: str;
+    has visible_total: float;
+    has currency: str = "USD";
 }
 
-node Instruction {
+# Untrusted text embedded in the document (the prompt injection carrier).
+node Instruction(FGNode) {
     has instruction_id: str;
     has text: str;
-    has is_malicious: bool;
+    has trust_level: str = "untrusted";
+    has is_malicious: bool = False;
     has target_amount: float = 0.0;
     has target_account: str = "";
+    has wants_secrets: bool = False;
 }
 
-node Agent {
-    has agent_id: str = "invoice_processor_v1";
-    has role: str = "Automated Accounts Payable Agent";
+# Trusted vendor master record, loaded server-side (never from the client).
+node VendorRecord(FGNode) {
+    has vendor_id: str;
+    has name: str;
+    has verified_destination: str;
+    has expected_invoice_total: float;
+    has status: str = "verified";
 }
 
-node ProposedAction {
-    has action_id: str;
-    has action_type: str;
-    has amount: float;
-    has destination: str;
+# A fact or claim with explicit provenance. trust_level:
+# verified | document_visible | untrusted
+node Evidence(FGNode) {
+    has id: str;
+    has source_type: str;
+    has field: str;
+    has content: str;
+    has trust_level: str;
 }
 
-node Tool {
-    has tool_id: str;
+# The naive agent's requested tool call.
+node ProposedAction(FGNode) {
     has tool_name: str;
+    has origin: str;
+    has arguments: dict[str, any] = {};
+    has status: str = "proposed";
 }
 
-node Asset {
-    has asset_id: str;
+# One counterfactual future produced from the proposed action.
+node FutureBranch(FGNode) {
     has name: str;
-    has max_limit: float = 1000.00;
-}
-
-node Policy {
-    has policy_id: str;
-    has name: str;
-    has description: str;
-    has max_allowed_payment: float = 1000.00;
-    has require_verified_vendor: bool = True;
-    has forbid_credential_leak: bool = True;
-}
-
-node Evidence {
-    has evidence_id: str;
-    has description: str;
-    has severity: str;
-}
-
-node FutureBranch {
-    has branch_id: str;
-    has label: str;
-    has proposed_amount: float;
-    has target_account: str;
+    has title: str;
+    has action_variant: str;
+    has order: int = 0;
+    has pays: bool = True;
+    has uses_untrusted_input: bool = False;
+    has sim_amount: float = 0.0;
+    has sim_destination: str = "";
+    has sim_memo: str = "";
     has risk_score: int = 0;
     has utility_score: int = 0;
-    has status: str = "pending";
-    has explanation: str = "";
+    has valid: bool = True;
+    has verdict: str = "PENDING";
+    has risk_reasons: list[str] = [];
+    has utility_reasons: list[str] = [];
 }
 
-node Consequence {
-    has desc: str;
-    has risk_delta: int;
+# An enforceable safety constraint (deterministic rule reference).
+node Policy(FGNode) {
+    has id: str;
+    has description: str;
+    has severity: str;
+    has deterministic_rule: str;
+    has params: dict[str, any] = {};
 }
 
-node Incident {
-    has incident_id: str;
-    has timestamp: str;
-    has summary: str;
+# A branch-specific policy failure, citing its policy and evidence.
+node Violation(FGNode) {
+    has policy_id: str;
+    has reason: str;
+    has severity: str;
+    has evidence_ids: list[str] = [];
 }
 
-node Decision {
-    has decision_id: str;
+# A deterministic (or LLM-assisted) injection indicator on untrusted text.
+node InjectionFinding(FGNode) {
+    has category: str;
+    has excerpt: str;
+    has detail: str;
+    has source: str = "deterministic";
+}
+
+# The final selection record.
+node Decision(FGNode) {
     has selected_branch: str;
-    has status_message: str;
+    has confidence: float;
+    has explanation: str;
+    has status: str = "pending";
 }
 
-edge Contains {}
-edge OriginatedFrom {}
-edge Proposes {}
-edge UsesTool {}
-edge Affects {}
-edge ProtectedBy {}
-edge Violates {}
-edge Produces {}
-edge ForksInto {}
-edge ResultsIn {}
-edge SelectedAs {}
-edge RejectedAs {}
+# The committed SIMULATED action. Only ever written to the local audit log.
+node MockTransaction(FGNode) {
+    has tool_name: str;
+    has amount: float;
+    has destination: str;
+    has memo: str;
+    has purchase_order: str;
+    has simulated: bool = True;
+    has committed_at: str = "";
+}
+
+# Append-only timeline entry for the visible walker activity feed.
+node AuditEvent(FGNode) {
+    has seq: int;
+    has stage: str;
+    has actor: str;
+    has details: str;
+    has timestamp: str = "";
+}
+
+# ---------------------------------------------------------------------------
+# Required relationship types (spec section 04) + Contains for containment.
+# ---------------------------------------------------------------------------
+
+# Action or branch originated from specified evidence.
+edge DERIVED_FROM: FGNode --> Evidence {
+    has note: str = "";
+}
+
+# Proposed action created a possible future branch.
+edge FORKS_TO: ProposedAction --> FutureBranch {
+    has note: str = "";
+}
+
+# Branch was checked against a policy.
+edge EVALUATED_AGAINST: FutureBranch --> Policy {
+    has result: str = "pass";
+}
+
+# Branch conflicts with a policy.
+edge VIOLATES: FutureBranch --> Policy {
+    has severity: str = "";
+}
+
+# Decision or finding is justified by evidence.
+edge SUPPORTED_BY: FGNode --> Evidence {
+    has note: str = "";
+}
+
+# Decision chose one branch.
+edge SELECTS: Decision --> FutureBranch {
+    has note: str = "";
+}
+
+# Approved decision produced one mock action.
+edge COMMITS: Decision --> MockTransaction {
+    has note: str = "";
+}
+
+# Structural containment within one scenario run.
+edge Contains: FGNode --> FGNode {
+    has kind: str = "";
+}
+
+# ---------------------------------------------------------------------------
+# Shared graph helpers
+# ---------------------------------------------------------------------------
+
+def now_iso() -> str {
+    return datetime.now(timezone.utc).isoformat();
+}
+
+# Append an audit event to the run timeline and return it.
+def add_audit(run: ScenarioRun, stage: str, actor: str, details: str) -> AuditEvent {
+    run.audit_seq += 1;
+    ev = AuditEvent(
+        seq=run.audit_seq,
+        stage=stage,
+        actor=actor,
+        details=details,
+        timestamp=now_iso()
+    );
+    run +>:Contains(kind="audit"):+> ev;
+    return ev;
+}
+
+# All audit events of a run, in append order.
+def timeline_of(run: ScenarioRun) -> list[AuditEvent] {
+    events = [run ->:Contains:kind == "audit":->[?:AuditEvent]];
+    return sorted(events, key=lambda e: AuditEvent : e.seq);
+}

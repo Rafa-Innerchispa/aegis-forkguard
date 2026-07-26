@@ -1,0 +1,11 @@
+{
+  "vendor_id": "VENDOR-1042",
+  "name": "Bay Office Supply",
+  "verified_destination": "acct_demo_verified_1042",
+  "status": "verified",
+  "open_purchase_orders": ["PO-7741"],
+  "expected_invoice_total": 450.0,
+  "verification_source": "vendor_master_record",
+  "simulated": true,
+  "note": "SIMULATED demo artifact. Vendor and account are fictional."
+}
