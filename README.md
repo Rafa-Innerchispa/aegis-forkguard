@@ -107,6 +107,14 @@ jac start main.jac
 
 Then open **<http://localhost:8000/static/index.html>**.
 
+On Windows you can instead double-click **`start-demo.cmd`**, which starts the server,
+waits for the walkers to answer, and opens the right URL for you.
+
+> **Do not open `assets/index.html` by double-clicking it.** That loads the page over
+> `file://`, where its requests to `/walker/...` resolve against the file system and can
+> never reach the engine — the dashboard will correctly report the backend as unreachable
+> no matter how healthy the server is. Always go through `http://localhost:8000`.
+
 **Run the terminal demo** (no browser needed):
 
 ```bash
