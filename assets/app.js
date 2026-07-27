@@ -28,6 +28,10 @@ const translations = {
         payload_title: "INVOICE PAYLOAD (JSON)",
         payload_locked: "LOCKED PRESET — USE SANDBOX TAB TO EDIT",
         payload_editable: "EDITABLE — PASTE A PAYLOAD, THEN RUN FORKGUARD",
+        btn_film: "Concept Film",
+        film_title: "ForkGuard — Concept Film",
+        film_nosupport: "Your browser cannot play this video. The file is at assets/media/forkguard-concept-film.mp4.",
+        film_disclaimer: "Illustrative animation, not a product demo. AI-generated, carries the generator's watermark, and its on-screen invoice is decorative rather than the canonical scenario. Everything else on this dashboard is computed live by the Jac engine.",
         tag_unknown: "Unscanned",
         tag_clean: "No injection found by Jac classifier",
         tag_detected: "⚠️ INJECTION CONFIRMED BY JAC",
@@ -92,6 +96,10 @@ const translations = {
         payload_title: "PAYLOAD DE FACTURA (JSON)",
         payload_locked: "PRESET BLOQUEADO — USA LA PESTAÑA SANDBOX PARA EDITAR",
         payload_editable: "EDITABLE — PEGA UN PAYLOAD Y EJECUTA FORKGUARD",
+        btn_film: "Film Conceptual",
+        film_title: "ForkGuard — Film Conceptual",
+        film_nosupport: "Tu navegador no puede reproducir este video. El archivo está en assets/media/forkguard-concept-film.mp4.",
+        film_disclaimer: "Animación ilustrativa, no una demo del producto. Generada por IA, lleva la marca de agua del generador, y la factura en pantalla es decorativa, no el escenario canónico. Todo lo demás en este panel lo calcula en vivo el motor Jac.",
         tag_unknown: "Sin escanear",
         tag_clean: "Sin inyección según el clasificador Jac",
         tag_detected: "⚠️ INYECCIÓN CONFIRMADA POR JAC",
@@ -623,6 +631,39 @@ async function resetDemo() {
         setButtonsBusy(false);
     }
 }
+
+// ----------------------------------------------------------------------------
+// Concept film modal
+// ----------------------------------------------------------------------------
+let filmLastFocus = null;
+
+function openFilm() {
+    const overlay = $("film-overlay");
+    filmLastFocus = document.activeElement;
+    overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    $("film-close").focus();
+}
+
+function closeFilm() {
+    const overlay = $("film-overlay");
+    const video = $("film-video");
+    // Stop and rewind, so audio never keeps playing behind the dashboard
+    // and reopening always starts from the top.
+    video.pause();
+    try { video.currentTime = 0; } catch { /* not yet loaded */ }
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+    if (filmLastFocus) filmLastFocus.focus();
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !$("film-overlay").hidden) closeFilm();
+});
+
+document.addEventListener("click", (e) => {
+    if (e.target === $("film-overlay")) closeFilm();
+});
 
 // ----------------------------------------------------------------------------
 // Boot

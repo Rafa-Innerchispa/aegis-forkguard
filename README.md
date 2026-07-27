@@ -45,12 +45,16 @@ violations that killed them. Green = the selected branch and its committed mock 
 
 ### Concept film
 
-[![ForkGuard concept film](docs/media/concept-film-poster.jpg)](docs/media/forkguard-concept-film.mp4)
+[![ForkGuard concept film](assets/media/concept-film-poster.jpg)](assets/media/forkguard-concept-film.mp4)
 
 *25-second stylized concept film — click to play.* **This is an illustrative animation, not
 a product demo.** It is AI-generated, carries the generator's watermark, and its on-screen
 invoice is decorative rather than the canonical scenario. For what the software actually
 does, run it (`jac start main.jac`) or read the verified walkthrough below.
+
+It is also embedded in the dashboard itself, behind the **▶ Concept Film** button in the
+header — opt-in and never autoplayed, so the live control surface only ever shows real
+engine output.
 
 ---
 
