@@ -15,6 +15,8 @@ const translations = {
         btn_reset: "🔄 Reset Demo",
         err_title: "Backend unreachable.",
         err_body: "This dashboard only renders real results computed by the Jac engine — nothing is faked client-side. Start the server with",
+        err_file_title: "Opened as a local file — the server is never reached this way.",
+        err_file_body: "You are viewing this page over file://, so its requests cannot reach the Jac engine even when it is running. Run jac start main.jac, then open",
         kpi_mode: "EXECUTION MODE",
         kpi_risk: "INJECTED-BRANCH RISK",
         kpi_futures: "FUTURES EVALUATED",
@@ -83,6 +85,8 @@ const translations = {
         btn_reset: "🔄 Reiniciar Demo",
         err_title: "Servidor inaccesible.",
         err_body: "Este panel solo muestra resultados reales calculados por el motor Jac — nada se simula en el cliente. Inicia el servidor con",
+        err_file_title: "Abierto como archivo local — así nunca se alcanza el servidor.",
+        err_file_body: "Estás viendo esta página vía file://, así que sus peticiones no pueden llegar al motor Jac aunque esté funcionando. Ejecuta jac start main.jac y luego abre",
         kpi_mode: "MODO DE EJECUCIÓN",
         kpi_risk: "RIESGO DE RAMA INYECTADA",
         kpi_futures: "FUTUROS EVALUADOS",
@@ -196,11 +200,29 @@ async function callFunction(name) {
     return json?.data?.result ?? json?.data?.reports?.[0] ?? null;
 }
 
+// The single most common cause of a dead dashboard is opening index.html
+// straight off disk: over file:// (or any non-http origin) every
+// fetch("/walker/...") resolves relative to that origin and can never reach
+// the server, however healthy the server is. Distinguish the two cases so the
+// banner tells you which one you are actually in.
+function backendErrorKind() {
+    const served = location.protocol === "http:" || location.protocol === "https:";
+    return served ? "server_down" : "opened_from_disk";
+}
+
 function setBackendError(on) {
-    $("error-banner").classList.toggle("show", on);
+    const banner = $("error-banner");
+    banner.classList.toggle("show", on);
     const pill = $("state-pill");
     pill.classList.toggle("error", on);
-    if (on) $("state-pill-text").textContent = T("state_error");
+    if (!on) return;
+    $("state-pill-text").textContent = T("state_error");
+
+    banner.innerHTML = backendErrorKind() === "opened_from_disk"
+        ? `<b>${esc(T("err_file_title"))}</b> ${esc(T("err_file_body"))}
+           <code>http://localhost:8000/static/index.html</code>`
+        : `<b>${esc(T("err_title"))}</b> ${esc(T("err_body"))}
+           <code>jac start main.jac</code>`;
 }
 
 function setStatePill(text) {
