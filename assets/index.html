@@ -43,10 +43,6 @@
                         <option value="es">ES</option>
                     </select>
                 </div>
-                <button class="btn btn-film" id="btn-film" onclick="openFilm()" aria-haspopup="dialog">
-                    <span class="film-glyph" aria-hidden="true">▶</span>
-                    <span data-i18n="btn_film">Concept Film</span>
-                </button>
                 <button class="btn btn-reset" id="btn-reset" onclick="resetDemo()">
                     <span data-i18n="btn_reset">Reset Demo</span>
                 </button>
@@ -76,6 +72,34 @@
                 </div>
                 <p class="hero-right-copy">SIMULATE / SCORE / VERIFY / COMMIT</p>
             </div>
+        </section>
+
+        <!-- Concept film, inline. Click-to-play only: this is the one panel on
+             the page that is NOT live engine output, so it is labelled as such
+             and never autoplays. -->
+        <section class="film-inline" aria-labelledby="film-inline-heading">
+            <div class="film-inline-copy">
+                <span class="section-index">B / CONCEPT</span>
+                <h2 id="film-inline-heading" data-i18n="film_title">ForkGuard — Concept Film</h2>
+                <p class="film-inline-lede" data-i18n="film_lede">
+                    Twenty-five seconds on why a single hidden instruction inside a routine
+                    invoice is worth building a firewall against.
+                </p>
+                <p class="film-disclaimer" data-i18n="film_disclaimer">
+                    Illustrative animation, not a product demo. AI-generated, carries the generator's
+                    watermark, and its on-screen invoice is decorative rather than the canonical scenario.
+                    Everything else on this dashboard is computed live by the Jac engine.
+                </p>
+            </div>
+            <video id="film-inline-video"
+                   class="film-video"
+                   controls
+                   preload="none"
+                   playsinline
+                   poster="media/concept-film-poster.jpg">
+                <source src="media/forkguard-concept-film.mp4" type="video/mp4">
+                <p data-i18n="film_nosupport">Your browser cannot play this video. The file is at assets/media/forkguard-concept-film.mp4.</p>
+            </video>
         </section>
 
         <div class="error-banner" id="error-banner">
@@ -264,35 +288,6 @@
             <p data-i18n="footer_text">AEGIS ForkGuard • JacHacks SF 2026 • Core in Jaclang 0.16 • SIMULATED environment: every vendor, account, and transaction is fictional; mock commits go to a local audit log only.</p>
             <div class="footer-code">FG / 0126<br>END OF SURFACE</div>
         </footer>
-    </div>
-
-    <!-- Concept film. Deliberately opt-in and never autoplayed: the dashboard's
-         credibility rests on everything visible being real backend data, so the
-         stylized film sits behind a click and is labelled as an illustration. -->
-    <div class="film-overlay" id="film-overlay" role="dialog" aria-modal="true" aria-labelledby="film-heading" hidden>
-        <div class="film-modal">
-            <div class="film-bar">
-                <div>
-                    <span class="section-index">B / CONCEPT</span>
-                    <h2 id="film-heading" data-i18n="film_title">ForkGuard — Concept Film</h2>
-                </div>
-                <button class="film-close" id="film-close" onclick="closeFilm()" aria-label="Close">✕</button>
-            </div>
-            <video id="film-video"
-                   class="film-video"
-                   controls
-                   preload="none"
-                   playsinline
-                   poster="media/concept-film-poster.jpg">
-                <source src="media/forkguard-concept-film.mp4" type="video/mp4">
-                <p data-i18n="film_nosupport">Your browser cannot play this video. The file is at assets/media/forkguard-concept-film.mp4.</p>
-            </video>
-            <p class="film-disclaimer" data-i18n="film_disclaimer">
-                Illustrative animation, not a product demo. AI-generated, carries the generator's
-                watermark, and its on-screen invoice is decorative rather than the canonical scenario.
-                Everything else on this dashboard is computed live by the Jac engine.
-            </p>
-        </div>
     </div>
 
     <script src="app.js"></script>

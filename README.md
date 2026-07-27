@@ -52,9 +52,9 @@ a product demo.** It is AI-generated, carries the generator's watermark, and its
 invoice is decorative rather than the canonical scenario. For what the software actually
 does, run it (`jac start main.jac`) or read the verified walkthrough below.
 
-It is also embedded in the dashboard itself, behind the **▶ Concept Film** button in the
-header — opt-in and never autoplayed, so the live control surface only ever shows real
-engine output.
+It is also embedded in the dashboard itself, in a panel directly under the hero — click to
+play, never autoplayed, and it pauses automatically the moment a run starts so it can never
+compete with the live graph.
 
 ---
 
